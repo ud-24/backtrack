@@ -1,0 +1,85 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Ideone
+{
+	static int n=8;
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		solve();
+	}
+	public static boolean solve()
+	{
+		int[][] a= new int[n][n];
+		if(solveall(a,0))
+		{
+			print(a);
+			return true;
+		}
+		else
+		{
+			System.out.println("no solution found");
+			
+		}return false;
+	}
+	public static void print(int[][] a)
+	{
+		for(int i=0;i<n;i++)
+	{	for(int j=0;j<n;j++)
+		System.out.print(a[i][j]+" ");
+		System.out.println();}
+	}
+	public static boolean safe(int[][] a,int row,int col)
+	{
+		for(int i=0;i<n;i++)
+		if(a[row][i]==1)
+		return false;
+		for(int i=0;i<n;i++)
+		if(a[i][col]==1)
+		return false;
+		for(int i=row,j=col;i>=0 && j>=0 ;i--,j--)
+		{
+			if(a[i][j]==1)
+			return false;
+		}
+		for(int i=row, j=col;i<n && j<n ;i++,j++)
+		{
+			if(a[i][j]==1)
+			return false;
+		}
+		for(int i=row, j=col;i>=0 && j<n ;i--,j++)
+		{
+			if(a[i][j]==1)
+			return false;
+		}
+		for(int i=row,j=col;i<n && j>=0 ;i++,j--)
+		{
+			if(a[i][j]==1)
+			return false;
+		}
+		return true;
+	}
+	public static boolean solveall(int[][] a,int col)
+	{
+		if(col>=n)
+		return true;
+		for(int i=0;i<n;i++)
+		{
+			if(safe(a,i,col))
+			{
+				a[i][col]=1;
+				//print(a);
+				if(solveall(a,col+1))
+				return true;
+				a[i][col]=0;
+				
+				
+			}
+		}
+		return false;
+	}
+}
